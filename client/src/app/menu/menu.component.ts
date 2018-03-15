@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  private title = 'errato';
+  title = 'errato';
 
   constructor(private authService: AuthService) { }
 
@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
     this.authService.title().subscribe(
       data => {
         console.log(data);
-        this.title = data;
+        this.title = data.title;
       },
       err => {
         console.log(err);

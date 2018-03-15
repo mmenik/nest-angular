@@ -13,7 +13,7 @@
         "outDir": "./dist"
     },
     "include": [
-        "server/src/**/*"
+        "server/src/**/*.ts"
     ],
     "exclude": [
         "node_modules",

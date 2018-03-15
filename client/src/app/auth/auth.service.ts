@@ -8,7 +8,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   title(): Observable<any> {
-    return this.http.get('/api', { headers: new HttpHeaders().set('Authentication', 'application/json') })
+    return this.http.get('/api/test', { headers: new HttpHeaders().set('Authentication', 'application/json') })
       .map((data: any) => {
         return data;
       })

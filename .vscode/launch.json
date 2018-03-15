@@ -8,20 +8,36 @@
             "name": "Launch Angular Client",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:4200",
+            "url": "http://localhost:4200/#",
             "sourceMaps": true,
-            "webRoot": "${workspaceRoot}/client/"            
+            "webRoot": "${workspaceRoot}",
+            "breakOnLoad": true
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Express Server",
-            "args": ["${workspaceRoot}\\server\\src\\main.ts"],
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "args": [
+                "${workspaceRoot}\\server\\src\\main.ts"
+            ],
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register"
+            ],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}",
             "protocol": "inspector",
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach Nodemon Server",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "sourceMaps": true,
+            "protocol": "inspector",
         }
     ],
     "compounds": [
@@ -29,7 +45,7 @@
             "name": "Launch Application",
             "configurations": [
                 "Launch Angular Client",
-                "Launch Express Server"
+                "Attach Nodemon Server"
             ]
         }
     ]

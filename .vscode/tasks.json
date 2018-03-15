@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "identifier": "ng serve",
+            "identifier": "Build dev client",
             "type": "npm",
-            "script": "start:ng",
+            "script": "watch:client",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -14,9 +14,9 @@
             }
         },
         {
-            "identifier": "nest serve",
+            "identifier": "Build dev server",
             "type": "npm",
-            "script": "start:nest",
+            "script": "watch:server",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
