@@ -1,5 +1,6 @@
 import { Controller, All, Res, Req } from '@nestjs/common';
 import * as path from 'path';
+
 @Controller()
 export class HomeController {
     constructor() { }
