@@ -3,7 +3,9 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as path from 'path';
 import * as cors from 'cors';
+import * as expressJWT from 'express-jwt';
 
+import { HttpStatus } from "@nestjs/common";
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
 
@@ -21,6 +23,13 @@ async function bootstrap() {
     app.use(cors());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(expressJWT({ secret: process.env.JWT_SWECRET }).unless({ path: '/api/auth/authenticate' }), (error, req, res, next) => {
+        if (error.name === 'UnauthorizedError') {
+            res.status(HttpStatus.UNAUTHORIZED).json({
+                message: error.message
+            });
+        }
+    });
 
     await app.listen(process.env.PORT, () => {
         console.log('bootstrap:', __dirname);

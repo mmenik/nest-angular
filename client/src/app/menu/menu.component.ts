@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
         this.title = data.title;
       },
       err => {
-        console.log(err);
+        console.log('Error', err);
       }
     );
   }
