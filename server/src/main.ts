@@ -15,8 +15,8 @@ const expressApp: express.Application = express();
 expressApp.use(express.static(path.join(__dirname, '../../public')));
 
 async function bootstrap() {
-   const app = await NestFactory.create(ApplicationModule, expressApp, null);
-//    const app = await NestFactory.create(ApplicationModule);
+//    const app = await NestFactory.create(ApplicationModule, expressApp, null);
+   const app = await NestFactory.create(ApplicationModule);
    app.setGlobalPrefix('api');
     // app.set('views', path.join(__dirname, '../../public'));
     // app.set('view engine', 'hbs');
@@ -32,7 +32,7 @@ async function bootstrap() {
     //     }
     // });
 
-    await app.listen(3000, () => {
+    await app.listen(process.env.PORT, () => {
         console.log('bootstrap:', __dirname);
         console.log(`Application is listining on port ${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
     });

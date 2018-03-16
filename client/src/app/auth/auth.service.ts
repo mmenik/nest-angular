@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
+  storageKey = 'contactManagerJwt';
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router) { }
 
-  title(): Observable<any> {
-    return this.http.get('/api/test', { headers: new HttpHeaders().set('Authentication', 'application/json') })
-      .map((data: any) => {
-        return data;
-      })
-      .catch((err: HttpErrorResponse) => Observable.throw(err.error));
+  setToken(token: string) {
+    localStorage.setItem(this.storageKey, token);
+  }
+
+  getToken(): string {
+    return localStorage.getItem(this.storageKey);
+  }
+
+  isLoggedIn(): boolean {
+    return this.getToken() !== null;
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.storageKey);
+    this.router.navigate(['/login']);
   }
 }

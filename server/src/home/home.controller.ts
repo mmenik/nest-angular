@@ -6,8 +6,8 @@ export class HomeController {
     constructor() { }
 
     @All('*')
-    async getIndex( @Res() res) {
-        console.log('all index');
+    async home(@Res() res) {
+        console.log('home');
         return await res.sendFile(path.join(__dirname, '../../../public/index.html'));
     }
 }
