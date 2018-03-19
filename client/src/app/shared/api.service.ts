@@ -33,6 +33,8 @@ export class ApiService {
       body: body,
       responseType: 'json'
     })
-      .catch((error: HttpErrorResponse) => Observable.throw(error));
+      .catch((error: HttpErrorResponse) => {
+        return Observable.throw(error);
+      });
   }
 }

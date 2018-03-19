@@ -23,4 +23,8 @@ export class AuthService {
     localStorage.removeItem(this.storageKey);
     this.router.navigate(['/login']);
   }
+
+  init(): void {
+    localStorage.removeItem(this.storageKey);
+  }
 }

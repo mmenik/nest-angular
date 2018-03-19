@@ -1,13 +1,16 @@
 import * as jwt from 'jsonwebtoken';
 import { Component } from '@nestjs/common';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.interface';
 
 @Component()
 // tslint:disable-next-line:component-class-suffix
 export class AuthService {
-    async createToken() {
-        console.log('createtoken');
-        const expiresIn = 60 * 60, secretOrKey = 'secret';
-        const user = { email: 'thisis@example.com' };
+    constructor(private readonly userService: UserService) { }
+
+    async createToken(user: string) {
+        const expiresIn = 60 * 60;
+        const secretOrKey = 'secret';
         const token = jwt.sign(user, secretOrKey, { expiresIn });
         return {
             expiresIn: expiresIn,
@@ -15,8 +18,13 @@ export class AuthService {
         };
     }
 
-    async validateUser(signedUser): Promise<boolean> {
-        console.log('validate user');
-        return true;
+    async validateUser(signedUser: User): Promise<boolean> {
+        if (signedUser && signedUser.username) {
+            const valid: boolean = Boolean(await this.userService.find(signedUser));
+            console.log(`Valid user: ${valid}`);
+            return valid;
+        }
+
+        return false;
     }
 }

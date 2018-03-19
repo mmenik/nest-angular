@@ -10,13 +10,11 @@ export class ContactService {
 
     constructor(@InjectModel(ContactSchema) private readonly contactModel: Model<Contact>) { }
 
-    async findAll(): Promise<Contact[]> {
-        console.log('service find all');
+    async findAll(): Promise<Contact[]> {        
         return await this.contactModel.find().exec();
     }
 
-    async create(contact: Contact): Promise<Contact> {
-        console.log('service create');
+    async create(contact: Contact): Promise<Contact> {        
         const newContact = new this.contactModel(contact);
         return await newContact.save();
     }

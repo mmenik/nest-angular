@@ -28,12 +28,11 @@ export class LoginComponent implements OnInit {
     this.apiService.post('auth/authenticate', payload)
       .subscribe(
         (data: any) => {
-          console.log(data);
           this.authService.setToken(data.token);
           this.router.navigate(['/contacts']);
         },
         error => {
-          console.log(error);
+          console.error('error', error);
         });
   }
 }

@@ -7,7 +7,6 @@ export class HomeController {
 
     @All('*')
     async home(@Res() res) {
-        console.log('home');
         return await res.sendFile(path.join(__dirname, '../../../public/index.html'));
     }
 }

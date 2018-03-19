@@ -7,14 +7,12 @@ export class ContactController {
     constructor(private readonly contactService: ContactService) { }
 
     @Get()
-    async findAll(): Promise<Contact[]> {
-        console.log('find all contact');
+    async findAll(): Promise<Contact[]> {        
         return this.contactService.findAll();
     }
 
     @Post()
-    async create(@Body() contact: Contact): Promise<Contact> {
-        console.log('create a new contact');
+    async create(@Body() contact: Contact): Promise<Contact> {        
         return this.contactService.create(contact);
     }
 }
