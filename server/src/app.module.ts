@@ -6,21 +6,30 @@ import { AuthModule } from './auth/auth.module';
 import { ContactModule } from './contact/contact.module';
 import { ContactController } from './contact/contact.controller';
 import { AuthController } from './auth/auth.controller';
-import { UserModule } from './user/user.model';
+import { UserModule } from './user/user.module';
+
+import * as dotenv from 'dotenv';
+import { LogModule } from './log/log.module';
+import { UserController } from './user/user.controller';
+
+dotenv.config();
 
 @Module({
   imports: [
+    LogModule,
     ContactModule,
     AuthModule,
     UserModule,
     HomeModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/contactmanager')
+    MongooseModule.forRoot(process.env.MONGODB_URI)
   ]
 })
 export class ApplicationModule implements NestModule {
+
   configure(consumer: MiddlewaresConsumer): void {
     consumer.apply(LoggerMiddleware)
       .with('ApplicationModule')
-      .forRoutes(AuthController, ContactController);
+      .forRoutes(AuthController, ContactController, UserController);
   }
+
 }

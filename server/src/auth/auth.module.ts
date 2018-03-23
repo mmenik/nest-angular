@@ -4,10 +4,11 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './passport/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { ContactController } from '../contact/contact.controller';
-import { UserModule } from '../user/user.model';
+import { UserModule } from '../user/user.module';
+import { LogModule } from '../log/log.module';
 
 @Module({
-    imports: [UserModule],
+    imports: [UserModule, LogModule],
     components: [AuthService, JwtStrategy],
     controllers: [AuthController]
 })

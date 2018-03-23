@@ -6,10 +6,10 @@
 /dist-server
 /tmp
 /out-tsc
+/logs
 
 # dependencies
 /node_modules
-*.lock
 
 # IDEs and editors
 /.idea
@@ -36,6 +36,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+yarn.lock
 
 # e2e
 /e2e/*.js

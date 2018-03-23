@@ -4,8 +4,7 @@ import { Middleware, NestMiddleware, ExpressMiddleware } from '@nestjs/common';
 export class LoggerMiddleware implements NestMiddleware {
     resolve(name: string): ExpressMiddleware {
         return (req, res, next) => {
-            console.log(`[${name}] Request...`); // [ApplicationModule] Request...
-            console.log(req.url);
+            console.log(`[${name}] Request: ${req.url}`);
             next();
         };
     }
