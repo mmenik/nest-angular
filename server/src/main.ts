@@ -16,6 +16,7 @@ import { ApplicationModule } from './app.module';
 import { LogModule } from './log/log.module';
 import { LogService } from './log/log.service';
 import { apiPath } from './api.path';
+import { NotFoundExceptionFilter } from './not-found-exception.filter';
 
 // dotenv.config();
 
@@ -23,14 +24,16 @@ const expressApp: express.Application = express();
 expressApp.use(express.static(path.join(__dirname, '../../public')));
 
 async function bootstrap() {
-    //    const app = await NestFactory.create(ApplicationModule, expressApp, null);
-    const app: INestApplication = await NestFactory.create(ApplicationModule);
+    const app = await NestFactory.create(ApplicationModule, expressApp, null);
+    // const app: INestApplication = await NestFactory.create(ApplicationModule);
+    app.useGlobalFilters(new NotFoundExceptionFilter());
+
     const log = app.select(LogModule).get(LogService);
 
-    app.setGlobalPrefix(apiPath(1, ''));
+    // app.setGlobalPrefix(apiPath(1, ''));
 
-    // app.set('views', path.join(__dirname, '../../public'));
-    // app.set('view engine', 'hbs');
+    app.set('views', path.join(__dirname, '../../public'));
+    app.set('view engine', 'hbs');
     // app.set('*.*', express.static(path.join(__dirname, 'public')));
 
     app.use(bodyParser.json());
@@ -42,7 +45,6 @@ async function bootstrap() {
     const swaggerConfig = new DocumentBuilder()
         .addBearerAuth()
         .setTitle('ts-mean sample api')
-        .setBasePath(apiPath(1, ''))
         .addTag('Auth')
         .addTag('Users')
         .addTag('Contacts')

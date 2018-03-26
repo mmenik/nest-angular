@@ -1,6 +1,5 @@
 import { Module, NestModule, MiddlewaresConsumer, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { HomeModule } from './home/home.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { ContactModule } from './contact/contact.module';
@@ -20,7 +19,6 @@ dotenv.config();
     ContactModule,
     AuthModule,
     UserModule,
-    HomeModule,
     MongooseModule.forRoot(process.env.MONGODB_URI)
   ]
 })
