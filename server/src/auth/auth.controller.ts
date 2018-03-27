@@ -1,10 +1,12 @@
-import { Controller, Post, HttpCode, HttpStatus, Get, Res, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Post, HttpCode, HttpStatus, Get, Res, Body, BadRequestException, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiUseTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginDto } from '../../../shared/src/dto/login.dto';
 import { apiPath } from '../api.path';
+import { LogInterceptor } from '../log/log.interceptor';
 
 @ApiUseTags('Auth')
+@UseInterceptors(LogInterceptor)
 @Controller(apiPath(1, 'auth'))
 export class AuthController {
 
@@ -16,8 +18,7 @@ export class AuthController {
     @Post()
     @HttpCode(HttpStatus.OK)
     public async login(@Body() login: LoginDto) {
-        console.log('login');
-        if (await this.authService.validateUser(login)) {
+        if (await this.authService.validateUser(login.username)) {
             // return res.status(HttpStatus.OK).json(await this.authService.createToken(body.username));
             return await this.authService.createToken(login.username);
         }

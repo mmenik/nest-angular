@@ -4,7 +4,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as cors from 'cors';
 import * as morgan from 'morgan';
-import * as hemmet from 'helmet';
+import * as helmet from 'helmet';
 
 // import * as expressJWT from 'express-jwt';
 
@@ -16,7 +16,13 @@ import { ApplicationModule } from './app.module';
 import { LogModule } from './log/log.module';
 import { LogService } from './log/log.service';
 import { apiPath } from './api.path';
-import { NotFoundExceptionFilter } from './not-found-exception.filter';
+import { NotFoundExceptionFilter } from './exceptions/not-found-exception.filter';
+import { AllExceptionFilter } from './exceptions/all-exception.filter';
+
+import 'rxjs/add/operator/do';
+import { UnauthorizedExceptionFilter } from './exceptions/unauthorized-exception.filter';
+
+
 
 // dotenv.config();
 
@@ -24,11 +30,12 @@ const expressApp: express.Application = express();
 expressApp.use(express.static(path.join(__dirname, '../../public')));
 
 async function bootstrap() {
-    const app = await NestFactory.create(ApplicationModule, expressApp, null);
+    const app = await NestFactory.create(ApplicationModule, expressApp, {});
     // const app: INestApplication = await NestFactory.create(ApplicationModule);
-    app.useGlobalFilters(new NotFoundExceptionFilter());
-
     const log = app.select(LogModule).get(LogService);
+    app.useGlobalFilters(new NotFoundExceptionFilter(log),
+        new UnauthorizedExceptionFilter(log),
+        new AllExceptionFilter(log));
 
     // app.setGlobalPrefix(apiPath(1, ''));
 
@@ -38,8 +45,9 @@ async function bootstrap() {
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+    // app.use(morgan('Url: :url Method: :method :status :res[content-length] - :response-time ms'));
     app.use(morgan('dev'));
-    app.use(hemmet());
+    app.use(helmet());
     app.use(cors());
 
     const swaggerConfig = new DocumentBuilder()

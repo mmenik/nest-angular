@@ -12,7 +12,8 @@ export class ApiService {
 
   private baseUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient,
+    private authService: AuthService) { }
 
   get<T>(url: string): Observable<T[]> {
     return this.request('GET', url);

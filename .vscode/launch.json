@@ -5,6 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch TS",
+            "program": "${workspaceRoot}/server/src/main.ts",
+            "cwd": "${workspaceRoot}",
+            "outFiles": ["${workspaceRoot}/dist/**/*.js"],
+            "preLaunchTask": "Build Server",
+            "sourceMaps": true,
+            "stopOnEntry": true,
+            "console": "internalConsole"
+        },
+        {
             "name": "Launch Angular Client",
             "type": "chrome",
             "request": "launch",
