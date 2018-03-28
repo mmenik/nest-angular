@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 import { ExceptionFilter, NotFoundException, Catch } from '@nestjs/common';
-import { LogService } from '../log/log.service';
+import { LogService } from '../../log/log.service';
 
 @Catch(NotFoundException)
 export class NotFoundExceptionFilter implements ExceptionFilter {

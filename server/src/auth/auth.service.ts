@@ -15,7 +15,7 @@ export class AuthService {
         this.log.info(`Create token for user: ${username}`);
         const secretOrPrivateKey: jwt.Secret = process.env.JWT_SECRET;
         const options: jwt.SignOptions = {
-            expiresIn: '1m',
+            expiresIn: '10m',
             algorithm: 'HS256'
         };
         const token = jwt.sign({ username }, secretOrPrivateKey, options);

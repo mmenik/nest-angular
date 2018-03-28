@@ -1,15 +1,15 @@
 import { Module, NestModule, MiddlewaresConsumer, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
-import { ContactModule } from './contact/contact.module';
-import { ContactController } from './contact/contact.controller';
 import { AuthController } from './auth/auth.controller';
 import { UserModule } from './user/user.module';
 import { LogModule } from './log/log.module';
 import { UserController } from './user/user.controller';
+import { ContactModule } from './contact/contact.module';
+import { LogMiddleware } from './common/middlewares/log.middleware';
+import { ContactController } from './contact/contact.controller';
 
 import * as dotenv from 'dotenv';
-import { LogMiddleware } from './log/log.middleware';
 
 dotenv.config();
 

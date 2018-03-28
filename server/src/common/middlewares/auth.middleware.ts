@@ -8,18 +8,13 @@ export class AuthMiddleware implements NestMiddleware {
     resolve(param: string): ExpressMiddleware {
         return async (req: Request, res: Response, next: NextFunction) => {
             return await passport.authenticate('jwt', { session: false }, (err, user, info) => {
-                console.log('err:', err);
-                console.log('user:', user);
-                console.log('info', info);
                 if (err === 'invalid') {
                     next(new UnauthorizedException('Invalid user'));
+                } else if (!user) {
+                    next(new UnauthorizedException('Token expires or invalid'));
+                } else {
+                    next();
                 }
-
-                if (!user) {
-                    next(new UnauthorizedException('Unauthorized'));
-                }
-
-                next();
             })(req, res, next);
         };
     }

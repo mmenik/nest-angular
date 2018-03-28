@@ -19,7 +19,7 @@ export class JwtStrategy extends Strategy {
     public async verify(req, payload, done) {
         this.log.info(`verify payload: ${JSON.stringify(payload)}`);
         const isValid = await this.authService.validateUser(payload.username);
-        if (isValid) {
+        if (!isValid) {
             return done('invalid', false);
         }
         done(null, payload);

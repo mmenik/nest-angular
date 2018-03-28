@@ -12,5 +12,8 @@ export const ContactSchema = new Schema({
     },
     photoUrl: {
         type: String
+    },
+    email: {
+        type: String
     }
 });

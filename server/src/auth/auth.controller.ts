@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { ApiUseTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginDto } from '../../../shared/src/dto/login.dto';
 import { apiPath } from '../api.path';
-import { LogInterceptor } from '../log/log.interceptor';
+import { LogInterceptor } from '../common/interceptors/log.interceptor';
 
 @ApiUseTags('Auth')
 @UseInterceptors(LogInterceptor)

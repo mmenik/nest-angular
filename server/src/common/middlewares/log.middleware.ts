@@ -1,6 +1,6 @@
 import { Middleware, NestMiddleware, ExpressMiddleware } from '@nestjs/common';
-import { LogService } from './log.service';
 import { Request, Response, NextFunction } from 'express';
+import { LogService } from '../../log/log.service';
 
 @Middleware()
 export class LogMiddleware implements NestMiddleware {
@@ -9,7 +9,7 @@ export class LogMiddleware implements NestMiddleware {
 
     resolve(param: string): ExpressMiddleware {
         return (req: Request, res: Response, next: NextFunction) => {
-            this.log.debug(`${param} Url: ${req.url}, Method: ${req.method}`);
+            this.log.debug(`${param} url:${req.url}, method:${req.method}`);
             next();
         };
     }

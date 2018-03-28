@@ -16,13 +16,12 @@ import { ApplicationModule } from './app.module';
 import { LogModule } from './log/log.module';
 import { LogService } from './log/log.service';
 import { apiPath } from './api.path';
-import { NotFoundExceptionFilter } from './exceptions/not-found-exception.filter';
-import { AllExceptionFilter } from './exceptions/all-exception.filter';
+
+import { NotFoundExceptionFilter } from './common/exceptions/not-found-exception.filter';
+import { UnauthorizedExceptionFilter } from './common/exceptions/unauthorized-exception.filter';
+import { AllExceptionFilter } from './common/exceptions/all-exception.filter';
 
 import 'rxjs/add/operator/do';
-import { UnauthorizedExceptionFilter } from './exceptions/unauthorized-exception.filter';
-
-
 
 // dotenv.config();
 
