@@ -1,5 +1,5 @@
 import { Module, NestModule, MiddlewaresConsumer, RequestMethod } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
 import { UserModule } from './user/user.module';
@@ -19,7 +19,7 @@ dotenv.config();
     ContactModule,
     AuthModule,
     UserModule,
-    MongooseModule.forRoot(process.env.MONGODB_URI)
+    TypeOrmModule.forRoot()
   ]
 })
 export class ApplicationModule implements NestModule {

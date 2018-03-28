@@ -1,39 +1,35 @@
 import { Component } from '@nestjs/common';
-import { User } from './user.interface';
-import { InjectModel } from '@nestjs/mongoose';
-import { UserSchema } from './user.schema';
-import { Model } from 'mongoose';
 import { AccountDto } from '../../../shared/src/dto/account.dto';
 import { LogService } from '../log/log.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './user.entity';
+import { Repository } from 'typeorm';
 
 @Component()
 // tslint:disable-next-line:component-class-suffix
 export class UserService {
 
-    constructor(@InjectModel(UserSchema) private readonly userModel: Model<User>,
+    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>,
         private readonly log: LogService) { }
 
     async findAll(): Promise<User[]> {
-        return await this.userModel.find().exec();
+        return await this.userRepository.find();
     }
 
     async findByUsername(username: string): Promise<User> {
         this.log.info(`Find user by username: ${username}`);
-        return await this.userModel.findOne({ username: username });
+        return await this.userRepository.findOne({ username: username });
     }
 
     async create(account: AccountDto): Promise<User> {
         this.log.info(`Create accout ${JSON.stringify(account)}`);
 
-        const user: User = await this.userModel.create({
-            firstname: account.user.firstname,
-            lastname: account.user.lastname,
-            password: account.login.password,
-            username: account.login.username,
-        });
+        let entity: User = new User(account);
 
-        this.log.info(`User created: ${user}`);
+        entity = await this.userRepository.create(entity);
 
-        return user;
+        this.log.info(`User created: ${JSON.stringify(entity)}`);
+
+        return entity;
     }
 }

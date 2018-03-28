@@ -19,12 +19,12 @@ export class ContactController {
     @Get()
     async findAll(): Promise<ContactDto[]> {
         this.log.info('find all contacts');
-        return this.contactService.findAll();
+        return await this.contactService.findAll();
     }
 
     @ApiOperation({ title: 'Create contact' })
     @Post()
     async create(@Body(new ValidationPipe()) contact: ContactDto): Promise<ContactDto> {
-        return this.contactService.create(contact);
+        return await this.contactService.create(contact);
     }
 }
