@@ -1,8 +1,10 @@
 {
     "type": "mongodb",
     "host": "localhost",
-    "database": "prova",
-    "entities": ["server/src/**/**.entity{.ts,.js}"],
-    "synchronize": true,
-    "loggerLevel": "debug"
+    "port": "27017",
+    "database": "nest",
+    "entities": [
+        "server/src/**/**.entity{.ts,.js}"
+    ],
+    "synchronize": true
 }

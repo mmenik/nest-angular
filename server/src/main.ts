@@ -30,6 +30,7 @@ expressApp.use(express.static(path.join(__dirname, '../../public')));
 
 async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule, expressApp, {});
+
     // const app: INestApplication = await NestFactory.create(ApplicationModule);
     const log = app.select(LogModule).get(LogService);
     app.useGlobalFilters(new NotFoundExceptionFilter(log),
@@ -54,8 +55,8 @@ async function bootstrap() {
         .setTitle('ts-mean sample api')
         .addTag('Auth')
         .addTag('Users')
-        .addTag('Contacts')
-        .setDescription('Sample REST API that allows to manage list of contacts')
+        .addTag('Bags')
+        .setDescription('Sample REST API that allows to manage list of bags')
         .setVersion('1.0')
         .build();
 

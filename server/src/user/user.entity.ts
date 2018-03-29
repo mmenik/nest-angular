@@ -3,16 +3,6 @@ import { AccountDto } from '../../../shared/src/dto/account.dto';
 
 @Entity()
 export class User {
-    constructor(private readonly account?: AccountDto) {
-        if (account) {
-            this.username = account.login.username;
-            this.password = account.login.password;
-            this.firstname = account.user.firstname;
-            this.lastname = account.user.lastname;
-            this.admin = false;
-        }
-    }
-
     @ObjectIdColumn()
     id: ObjectID;
 
@@ -30,4 +20,15 @@ export class User {
 
     @Column()
     lastname: string;
+
+    static fromDto(dto: AccountDto, password: string): User {
+        const entity: User = new User();
+        entity.admin = false;
+        entity.firstname = dto.user.firstname;
+        entity.lastname = dto.user.lastname;
+        entity.username = dto.login.username;
+        entity.password = password;
+
+        return entity;
+    }
 }

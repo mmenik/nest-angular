@@ -1,24 +1,24 @@
-import * as passport from 'passport';
-import { Module, NestModule, MiddlewaresConsumer, RequestMethod, UnauthorizedException } from '@nestjs/common';
+import { LogModule } from '../log/log.module';
+import { Module, NestModule, MiddlewaresConsumer } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './passport/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
-import { LogModule } from '../log/log.module';
+import { PasswordCryptService } from './password/password-crypt.service';
 import { AuthMiddleware } from '../common/middlewares/auth.middleware';
-import { ContactController } from '../contact/contact.controller';
+import { BagController } from '../bag/bag.controller';
+
 
 @Module({
     imports: [UserModule, LogModule],
-    components: [AuthService, JwtStrategy],
+    components: [AuthService, JwtStrategy, PasswordCryptService],
     controllers: [AuthController]
 })
-export class AuthModule {
-    // export class AuthModule implements NestModule {
-    //     public configure(consumer: MiddlewaresConsumer) {
-    //         consumer.apply(AuthMiddleware)
-    //             .forRoutes(ContactController);
-    //     }
+export class AuthModule implements NestModule {
+    public configure(consumer: MiddlewaresConsumer) {
+        consumer.apply(AuthMiddleware)
+            .forRoutes(BagController);
+    }
     // public configure(consumer: MiddlewaresConsumer) {
     //     consumer.apply(passport.authenticate('jwt', { session: false }))
     //         .forRoutes(ContactController);
