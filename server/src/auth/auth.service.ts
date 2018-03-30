@@ -5,17 +5,24 @@ import { LoginDto } from '../../../shared/src/dto/login.dto';
 import { UserService } from '../user/user.service';
 import { PasswordCryptService } from './password/password-crypt.service';
 import { User } from '../user/user.entity';
+import { v4 } from 'uuid';
 
 @Component()
 // tslint:disable-next-line:component-class-suffix
 export class AuthService {
+    private readonly _secret: string = v4();
+
     constructor(private readonly userService: UserService,
         private passwordCryptService: PasswordCryptService,
         private readonly log: LogService) { }
 
+    get secret(): string {
+        return this._secret;
+    }
+
     async createToken(username: string) {
         this.log.info(`Create token for user: ${username}`);
-        const secretOrPrivateKey: jwt.Secret = process.env.JWT_SECRET;
+        const secretOrPrivateKey: jwt.Secret = this.secret;
         const options: jwt.SignOptions = {
             expiresIn: '10m',
             algorithm: 'HS256'

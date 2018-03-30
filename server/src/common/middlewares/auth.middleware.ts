@@ -11,7 +11,7 @@ export class AuthMiddleware implements NestMiddleware {
                 if (err === 'invalid') {
                     next(new UnauthorizedException('Invalid user'));
                 } else if (!user) {
-                    next(new UnauthorizedException('Token expires or invalid'));
+                    next(new UnauthorizedException('Token expires or not valid'));
                 } else {
                     next();
                 }

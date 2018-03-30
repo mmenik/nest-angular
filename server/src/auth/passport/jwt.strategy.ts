@@ -1,8 +1,9 @@
 import * as passport from 'passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ExtractJwt, Strategy, StrategyOptions } from 'passport-jwt';
 import { Component, Inject, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 import { LogService } from '../../log/log.service';
+import { v4 } from 'uuid';
 
 @Component()
 // tslint:disable-next-line:component-class-suffix
@@ -11,7 +12,7 @@ export class JwtStrategy extends Strategy {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             passReqToCallback: true,
-            secretOrKey: process.env.JWT_SECRET,
+            secretOrKey: authService.secret,
         }, async (req, payload, next) => await this.verify(req, payload, next));
         passport.use(this);
     }
